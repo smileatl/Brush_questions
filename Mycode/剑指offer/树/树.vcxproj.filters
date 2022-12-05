@@ -15,11 +15,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="55_二叉树的深度_1.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="27_二叉树的镜像_1.cpp">
-      <Filter>源文件</Filter>
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="55_二叉树的深度_1.cpp">
+      <Filter>资源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="32_从上到下打印二叉树_1.cpp">
+      <Filter>资源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

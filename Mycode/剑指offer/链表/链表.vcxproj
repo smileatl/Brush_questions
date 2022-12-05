@@ -139,9 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\树\52_两个链表的第一个公共节点_1.cpp" />
+    <ClCompile Include="18_删除链表的结点_1.cpp" />
+    <ClCompile Include="22_链表中倒数第k个结点_1.cpp" />
     <ClCompile Include="24_反转链表_1.cpp" />
     <ClCompile Include="25_合并两个排序的链表_1.cpp" />
     <ClCompile Include="6_从尾到头打印链表_1.cpp" />
+    <ClCompile Include="II_22_链表中环的入口结点_1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

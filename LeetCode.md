@@ -1088,9 +1088,7 @@ public:
 };
 ```
 
-## 105 从前序与中序遍历序列构造二叉树
 
-方法一：
 
 # 最简单的贪心算法
 
@@ -1980,4 +1978,123 @@ public:
 	}
 };
 ```
+
+# 动态规划
+
+## 70 爬楼梯
+
+### 方法一：动态规划
+
+斐波那契数列
+
+状态转移方程：dp[i]=dp[i-1]+dp[i-2]
+
+```cpp
+class Solution {
+public:
+	int climbStairs(int n) {
+		if (n <= 2) {
+			return n;
+		}
+		int first = 1, two = 2; //定义两个子问题的解
+		int cur;
+		for (int i = 3; i <= n; ++i) {
+			cur = first + two; //当前问题的解等于两个子问题的解之和
+			first = two;
+			two = cur;
+		}
+		return cur;
+	}
+};
+```
+
+## 198 打家劫舍
+
+### 方法一：动态规划
+
+​		定义一个数组 dp，dp[i] 表示抢劫到第 i 个房子时，可以抢劫的最大数量。我们考虑 dp[i]，此时可以抢劫的最大数量有两种可能，一种是我们选择不抢劫这个房子，此时累计的金额即为dp[i-1]；另一种是我们选择抢劫这个房子，那么此前累计的最大金额只能是 dp[i-2]，因为我们不能够抢劫第 i-1 个房子，否则会触发警报机关。因此本题的状态转移方程为 dp[i] = max(dp[i-1], nums[i-1] + dp[i-2])。
+
+```cpp
+class Solution {
+public:
+	int rob(vector<int>& nums) {
+		int len = nums.size();
+		if (nums.empty()) {
+			return 0;
+		}
+		if (len == 1) {
+			return nums[0];
+		}
+		int first = 0, two = 0;
+		int cur = 0;
+		for (int i = 0; i < len; ++i) {
+			cur = max(two, first + nums[i]);
+			first = two;
+			two = cur;
+		}
+		return cur;
+	}
+};
+```
+
+## 413 等差数列划分
+
+### 方法一：动态规划
+
+​		这道题略微特殊，因为要求是等差数列，可以很自然的想到子数组必定满足 num[i] - num[i-1] = num[i-1] - num[i-2]。然而由于我们对于 dp 数组的定义通常为以 i 结尾的，满足某些条件的子数组数量，而等差子数组可以在任意一个位置终结，因此此题在最后需要对 dp 数组求和。
+
+```cpp
+class Solution {
+public:
+	int numberOfArithmeticSlices(vector<int>& nums) {
+		int n = nums.size();
+		if (n < 3) {
+			return 0;
+		}
+		vector<int> dp(n, 0);
+		//从第3个数开始研究
+		for (int i = 2; i < n; ++i) {
+			if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]) {
+				dp[i] = dp[i - 1] + 1;
+			}
+		}
+		return accumulate(dp.begin(), dp.end(), 0);
+	}
+};
+```
+
+## 64 最小路径和
+
+### 方法一：动态规划
+
+​		我们可以定义一个同样是二维的 dp数组，其中 dp\[i\]\[j\]表示从左上角开始到 (i, j)位置的最优路径的数字和。因为每次只能向下或者向右移动，我们可以很容易得到状态转移方程 dp\[i\]\[j\] =min(dp\[i-1\]\[j\], dp\[i]\[j-1\]) + grid\[i\]\[j\]，其中 grid表示原数组。
+
+```cpp
+class Solution {
+public:
+	int minPathSum(vector<vector<int>>& grid) {
+		int m = grid.size();
+		int n = grid[0].size();
+		vector<vector<int>> dp(m, vector<int>(n, 0));
+		for (int i = 0; i < m; ++i) {
+			for (int j = 0; j < n; ++j) {
+				if (i == 0 && j == 0) {
+					dp[i][j] = grid[i][j];
+				}
+				else if (i == 0) {
+					dp[i][j] = dp[i][j - 1] + grid[i][j];
+				}
+				else if (j == 0) {
+					dp[i][j] = dp[i - 1][j] + grid[i][j];
+				}
+				else {
+					dp[i][j] = min(dp[i - 1][j], dp[i][j - 1]) + grid[i][j];
+				}
+			}
+		}
+		return dp[m - 1][n - 1];
+	}
+};
+```
+
 

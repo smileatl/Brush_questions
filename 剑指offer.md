@@ -193,6 +193,110 @@ public:
 };
 ```
 
+### 52、两个链表的第一个公共结点
+
+#### 方法一：双指针
+
+```cpp
+class Solution {
+public:
+    ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+		ListNode* curA = headA;
+		ListNode* curB = headB;
+		while (curA != curB) {
+			curA = curA ? curA->next : headB;
+			curB = curB ? curB->next : headA;
+		}
+		return curA;
+    }
+};
+```
+
+### II 22、链表中环的入口结点
+
+#### 方法一：哈希表
+
+```cpp
+class Solution {
+public:
+	ListNode* detectCycle(ListNode* head) {
+		unordered_set<ListNode*> uset;
+		ListNode* cur = head;
+		while (cur != nullptr) {
+            //一旦遇到了此前遍历过得结点，说明有换，并返回该结点
+			if (uset.count(cur)) {
+				return cur;
+			}
+			uset.insert(cur);
+			cur = cur->next;
+		}
+		return nullptr;
+	}
+};
+```
+
+### 22、链表中倒数第k个结点
+
+#### 方法一：双指针
+
+1. 后一个指针先走k步
+2. 然后两个指针一起走，直到后一个指针为空
+3. 返回前一个指针
+
+```cpp
+class Solution {
+public:
+	ListNode* getKthFromEnd(ListNode* head, int k) {
+		ListNode* former = head, * latter = head;
+		for (int i = 1; i <= k; ++i) {
+			latter = latter->next;
+		}
+
+		while (latter != nullptr) {
+			latter = latter->next;
+			former = former->next;
+		}
+		return former;
+	}
+};
+```
+
+### 18、删除链表的结点
+
+#### 方法一：两个指针
+
+1. 特例处理： 当应删除头节点 head 时，直接返回 head.next 即可。
+2. 初始化： `pre = head` , `cur = head.next` 。
+3. 定位节点： 当 cur 为空 或 cur 节点值等于 val 时跳出。
+   1. 保存当前节点索引，即 `pre = cur` 。
+   2. 遍历下一节点，即 `cur = cur.next` 。
+4. 删除节点： 若 `cur` 指向某节点，则执行 `pre.next = cur.next` ；若 `cur` 指向 `null`，代表链表中不包含值为 `val` 的节点。
+5. 返回值： 返回链表头部节点 `head` 即可
+
+
+
+```cpp
+class Solution {
+public:
+	ListNode* deleteNode(ListNode* head, int val) {
+		if (head->val == val) {
+			return head->next;
+		}
+		ListNode* cur = head, * pre = head;
+		while (cur->next != nullptr && cur->val != val) {
+			pre = cur;
+			cur = cur->next;
+		}
+		if (cur != nullptr) {
+			pre->next = cur->next;
+		}
+		return head;
+	}
+};
+```
+
+
+
 ## 树
 
 ### 55、二叉树的深度
@@ -210,6 +314,62 @@ public:
         //本质上是后序遍历
         //递归计算右子树和左子树的深度
         return max(maxDepth(root->left), maxDepth(root->right)) + 1;
+    }
+};
+```
+
+### 27、二叉树的镜像
+
+#### 方法一：写得很差的递归
+
+```cpp
+class Solution {
+public:
+    TreeNode* mirrorTree(TreeNode* root) {
+        if (root == nullptr) {
+            return nullptr;
+        }
+        TreeNode* temp = root->left;
+        root->left = root->right;
+        root->right = temp;
+        if (root->left) {
+            mirrorTree(root->left);
+        }
+        if (root->right) {
+            mirrorTree(root->right);
+        }
+        return root;
+    }
+};
+```
+
+### 32、从上到下打印二叉树
+
+#### 方法一：层次遍历
+
+用栈来实现层次遍历（做了几次之后，已经比较简单了）
+
+```cpp
+class Solution {
+public:
+    vector<int> levelOrder(TreeNode* root) {
+        queue<TreeNode*> q;
+        vector<int> v;
+        if (root == nullptr) {
+            return v;
+        }
+        q.push(root);
+        while (!q.empty()) {
+            v.push_back(q.front()->val);
+            if (q.front()->left != nullptr) {
+                q.push(q.front()->left);
+            }
+            if (q.front()->right != nullptr) {
+                q.push(q.front()->right);
+            }
+            q.pop();
+        }
+        return v;
     }
 };
 ```

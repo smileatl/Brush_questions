@@ -24,5 +24,17 @@
     <ClCompile Include="25_合并两个排序的链表_1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\树\52_两个链表的第一个公共节点_1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="II_22_链表中环的入口结点_1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="22_链表中倒数第k个结点_1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="18_删除链表的结点_1.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
